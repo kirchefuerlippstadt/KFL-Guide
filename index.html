@@ -901,7 +901,7 @@
     <div class="step-body">
       <div class="step-tag">Schritt 6 · Der wichtigste Schritt</div>
       <div class="step-title">Gib Jesus dein Leben!</div>
-      <div class="step-note">Dieser Schritt ändert alles! Sprich mit einer Person deines Vertrauens in der Kirche – oder bete einfach selbst ein kurzes, aber ernst gemeintes Bekehrungsgebet.</div>
+      <div class="step-note">Dieser Schritt ändert alles! Sprich mit einer Person deines Vertrauens in der Kirche oder bete einfach selbst ein kurzes, aber ernst gemeintes Bekehrungsgebet.</div>
       <div class="step-action">
         <button class="btn btn-primary" onclick="openBekehrungModal(event)" style="background:var(--gold); color:var(--brown);">✓ Ich habe Ja gesagt!</button>
         <button class="btn btn-ghost" onclick="skipStep(event, 5)" style="color:var(--muted); border-color: transparent;">Überspringen →</button>
@@ -1259,7 +1259,7 @@
   }
 
   function shareWithCommunity() {
-    const msg = encodeURIComponent('Hey Leute, ich habe mich bekehrt. 😊');
+    const msg = encodeURIComponent('Hey Leute, ich habe mich bekehrt! 😊');
     window.open('https://wa.me/?text=' + msg, '_blank');
     closeBekehrungModal();
   }
