@@ -1,0 +1,1295 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KFL Lippstadt – Dein Weg</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@600;700&family=Inter:wght@400;500;600;700&display=swap');
+
+  :root {
+    --green: #2D4A3E;
+    --green-light: #3a5e50;
+    --gold: #C4956A;
+    --gold-light: #d4a87c;
+    --cream: #FAF7F2;
+    --cream-dark: #F0EAE0;
+    --brown: #3D2B1F;
+    --brown-muted: #6b4f3a;
+    --text: #1a1a1a;
+    --muted: #8a7a6a;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--cream);
+    font-family: 'Inter', sans-serif;
+    color: var(--text);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* ── HEADER ── */
+  .header {
+    background: var(--green);
+    color: var(--cream);
+    padding: 28px 24px 24px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .header::before {
+    content: '';
+    position: absolute;
+    top: -60px; right: -60px;
+    width: 200px; height: 200px;
+    border-radius: 50%;
+    background: rgba(196,149,106,0.15);
+  }
+
+  .header::after {
+    content: '';
+    position: absolute;
+    bottom: -40px; left: -40px;
+    width: 140px; height: 140px;
+    border-radius: 50%;
+    background: rgba(196,149,106,0.1);
+  }
+
+  .logo-wrap {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 16px;
+    opacity: 0.95;
+  }
+
+  .church-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 8px;
+  }
+
+  .header h1 {
+    font-family: 'Poppins', sans-serif;
+    font-size: 32px;
+    font-weight: 700;
+    line-height: 1.1;
+    color: var(--cream);
+    margin-bottom: 6px;
+  }
+
+  .header p {
+    font-size: 14px;
+    color: rgba(250,247,242,0.7);
+    font-weight: 400;
+  }
+
+  /* ── PROGRESS BANNER ── */
+  .progress-banner {
+    background: var(--cream-dark);
+    border-bottom: 1px solid rgba(196,149,106,0.3);
+    padding: 16px 24px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    backdrop-filter: blur(8px);
+  }
+
+  .progress-label {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--brown-muted);
+    white-space: nowrap;
+    min-width: 80px;
+  }
+
+  .progress-track {
+    flex: 1;
+    height: 6px;
+    background: rgba(196,149,106,0.25);
+    border-radius: 99px;
+    overflow: hidden;
+  }
+
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--gold), var(--gold-light));
+    border-radius: 99px;
+    transition: width 0.6s cubic-bezier(.4,0,.2,1);
+    width: 0%;
+  }
+
+  .progress-count {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--green);
+    min-width: 40px;
+    text-align: right;
+  }
+
+  /* ── STEPS LIST ── */
+  .steps {
+    padding: 24px 16px 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    max-width: 520px;
+    margin: 0 auto;
+  }
+
+
+
+  /* ── STEP CARD ── */
+  .step {
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+    cursor: pointer;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .step-orb-wrap {
+    flex-shrink: 0;
+    width: 54px;
+    height: 54px;
+    position: relative;
+  }
+
+  .step-orb {
+    width: 54px;
+    height: 54px;
+    border-radius: 50%;
+    background: var(--cream);
+    border: 3px solid var(--gold);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    transition: border-color 0.3s, background 0.4s, box-shadow 0.3s;
+    overflow: hidden;
+  }
+
+  .step-orb svg {
+    width: 20px;
+    height: 20px;
+    opacity: 0;
+    transform: scale(0.5);
+    transition: opacity 0.3s, transform 0.3s;
+    color: var(--cream);
+    position: relative;
+    z-index: 2;
+  }
+
+  .step-orb .step-num {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--gold);
+    position: absolute;
+    transition: opacity 0.3s;
+    z-index: 2;
+  }
+
+  /* Fill circle behind */
+  .step-orb::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    background: var(--green);
+    transform: scale(0);
+    transition: transform 0.4s cubic-bezier(.34,1.56,.64,1);
+  }
+
+  /* Completed state */
+  .step.done .step-orb {
+    border-color: var(--green);
+    box-shadow: 0 0 0 4px rgba(45,74,62,0.12);
+  }
+
+  .step.done .step-orb::after {
+    transform: scale(1);
+  }
+
+  .step.done .step-orb svg {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  .step.done .step-orb .step-num {
+    opacity: 0;
+  }
+
+  /* Active / current step */
+  .step.active .step-orb {
+    border-color: var(--gold-light);
+    box-shadow: 0 0 0 6px rgba(196,149,106,0.2);
+    animation: pulse 2s ease-in-out infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { box-shadow: 0 0 0 4px rgba(196,149,106,0.2); }
+    50% { box-shadow: 0 0 0 10px rgba(196,149,106,0.08); }
+  }
+
+  /* Step body */
+  .step-body {
+    flex: 1;
+    background: white;
+    border-radius: 16px;
+    padding: 16px 18px;
+    border: 1.5px solid var(--cream-dark);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    transition: border-color 0.3s, box-shadow 0.3s, background 0.3s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .step-body::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 4px;
+    background: var(--gold);
+    opacity: 0;
+    transition: opacity 0.3s;
+    border-radius: 0;
+  }
+
+  .step.active .step-body {
+    border-color: var(--gold);
+    box-shadow: 0 4px 16px rgba(196,149,106,0.18);
+  }
+
+  .step.active .step-body::before {
+    opacity: 1;
+  }
+
+  .step.done .step-body {
+    background: #f4f9f6;
+    border-color: rgba(45,74,62,0.2);
+  }
+
+  .step.done .step-body::before {
+    background: var(--green);
+    opacity: 1;
+  }
+
+  .step .step-tag::after {
+    content: ' · Optional';
+    color: var(--gold);
+    opacity: 0.8;
+  }
+  /* Steps with prerequisites are NOT optional */
+  .step.has-prereq .step-tag::after {
+    content: ' · Voraussetzung erforderlich';
+    color: var(--muted);
+  }
+
+  .step-tag {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 4px;
+  }
+
+  .step.active .step-tag { color: var(--gold); }
+  .step.done .step-tag { color: var(--green); }
+
+  .step-title {
+    font-family: 'Poppins', sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--brown);
+    line-height: 1.3;
+    margin-bottom: 6px;
+    transition: color 0.3s;
+  }
+
+  .step.done .step-title {
+    color: var(--brown-muted);
+    text-decoration: line-through;
+    text-decoration-color: var(--green);
+  }
+
+  .step.skipped .step-title {
+    text-decoration-color: var(--muted);
+    opacity: 0.6;
+  }
+
+  .step.skipped .step-orb {
+    border-color: var(--muted) !important;
+    box-shadow: none !important;
+    animation: none !important;
+  }
+
+  .step.skipped .step-orb::after {
+    background: var(--muted) !important;
+  }
+
+  .step.skipped .step-body {
+    background: var(--cream) !important;
+    border-color: rgba(138,122,106,0.2) !important;
+  }
+
+  .step.skipped .step-body::before {
+    background: var(--muted) !important;
+  }
+
+  .step-note {
+    font-size: 12px;
+    color: var(--muted);
+    line-height: 1.5;
+    display: none;
+  }
+
+  .step-note a {
+    color: var(--gold);
+    font-weight: 600;
+    text-decoration: none;
+  }
+
+  .step.active .step-note,
+  .step.done .step-note {
+    display: block;
+  }
+
+  .step-action {
+    display: none;
+    margin-top: 12px;
+  }
+
+  .step.active .step-action {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .btn {
+    padding: 9px 18px;
+    border-radius: 99px;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    border: none;
+    transition: all 0.2s;
+    font-family: 'Inter', sans-serif;
+    letter-spacing: 0.02em;
+  }
+
+  .btn-primary {
+    background: var(--green);
+    color: var(--cream);
+  }
+
+  .btn-primary:hover, .btn-primary:active {
+    background: var(--green-light);
+    transform: translateY(-1px);
+  }
+
+  .btn-ghost {
+    background: transparent;
+    color: var(--brown-muted);
+    border: 1.5px solid var(--cream-dark);
+    padding: 8px 16px;
+  }
+
+  .btn-ghost:hover {
+    border-color: var(--gold);
+    color: var(--brown);
+  }
+
+  /* ── SPECIAL: Highlight step (Jesus) ── */
+  .step.highlight .step-body {
+    background: linear-gradient(135deg, var(--green) 0%, var(--green-light) 100%);
+    border-color: var(--green);
+  }
+
+  .step.highlight.done .step-body {
+    background: #f4f9f6;
+    border-color: rgba(45,74,62,0.2);
+  }
+
+  .step.highlight .step-tag { color: rgba(250,247,242,0.6); }
+  .step.highlight .step-title { color: var(--cream); font-size: 18px; }
+  .step.highlight .step-note { color: rgba(250,247,242,0.75); }
+  .step.highlight .step-note a { color: var(--gold-light); }
+  .step.highlight .step-body::before { background: var(--gold); opacity: 1; }
+
+  .step.highlight.done .step-tag { color: var(--green); }
+  .step.highlight.done .step-title { color: var(--brown-muted); }
+  .step.highlight.done .step-note { color: var(--muted); }
+
+  /* ── COMPLETION SCREEN ── */
+  .completion {
+    display: none;
+    text-align: center;
+    padding: 60px 32px;
+    background: var(--green);
+    min-height: 60vh;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+  }
+
+  .completion.visible { display: flex; }
+
+  .completion-inner {
+    max-width: 360px;
+    margin: 0 auto;
+  }
+
+  .completion-icon {
+    width: 80px; height: 80px;
+    border-radius: 50%;
+    background: var(--gold);
+    margin: 0 auto 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .completion-icon svg {
+    width: 36px; height: 36px;
+    color: white;
+  }
+
+  .completion h2 {
+    font-family: 'Poppins', sans-serif;
+    font-size: 28px;
+    color: var(--cream);
+    margin-bottom: 14px;
+  }
+
+  .completion p {
+    font-size: 15px;
+    color: rgba(250,247,242,0.82);
+    line-height: 1.7;
+  }
+
+  .completion-reset {
+    margin-top: 32px;
+    display: inline-block;
+    font-size: 13px;
+    color: rgba(250,247,242,0.45);
+    text-decoration: underline;
+    cursor: pointer;
+  }
+
+  /* ── BEKEHRUNG MODAL ── */
+  .bekehrung-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.55);
+    z-index: 200;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    backdrop-filter: blur(4px);
+  }
+
+  .bekehrung-overlay.open { display: flex; }
+
+  .bekehrung-modal {
+    background: var(--green);
+    border-radius: 24px;
+    padding: 36px 28px 28px;
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+    animation: popIn 0.35s cubic-bezier(.34,1.56,.64,1);
+  }
+
+  @keyframes popIn {
+    from { transform: scale(0.85); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+  }
+
+  .bekehrung-emoji {
+    font-size: 48px;
+    margin-bottom: 16px;
+    line-height: 1;
+  }
+
+  .bekehrung-modal h3 {
+    font-family: 'Poppins', sans-serif;
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--cream);
+    margin-bottom: 12px;
+    line-height: 1.3;
+  }
+
+  .bekehrung-modal p {
+    font-size: 14px;
+    color: rgba(250,247,242,0.82);
+    line-height: 1.65;
+    margin-bottom: 24px;
+  }
+
+  .bekehrung-btn-share {
+    display: block;
+    width: 100%;
+    padding: 14px;
+    background: var(--gold);
+    color: var(--brown);
+    border: none;
+    border-radius: 12px;
+    font-size: 14px;
+    font-weight: 700;
+    font-family: 'Inter', sans-serif;
+    cursor: pointer;
+    margin-bottom: 10px;
+    transition: background 0.2s;
+  }
+
+  .bekehrung-btn-share:hover { background: var(--gold-light); }
+
+  .bekehrung-btn-skip {
+    display: block;
+    width: 100%;
+    padding: 12px;
+    background: transparent;
+    color: rgba(250,247,242,0.6);
+    border: 1.5px solid rgba(250,247,242,0.2);
+    border-radius: 12px;
+    font-size: 13px;
+    font-weight: 600;
+    font-family: 'Inter', sans-serif;
+    cursor: pointer;
+    transition: border-color 0.2s;
+  }
+
+  .bekehrung-btn-skip:hover { border-color: rgba(250,247,242,0.5); }
+
+  /* ── DONATE BUTTON ── */
+  .donate-btn {
+    position: fixed;
+    bottom: 24px;
+    right: 20px;
+    background: var(--gold);
+    color: var(--brown);
+    border: none;
+    border-radius: 99px;
+    padding: 12px 20px;
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 0 4px 16px rgba(196,149,106,0.45);
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    z-index: 100;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+
+  .donate-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(196,149,106,0.55);
+  }
+
+  /* ── DONATE MODAL ── */
+  .modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.5);
+    z-index: 200;
+    align-items: flex-end;
+    justify-content: center;
+    backdrop-filter: blur(3px);
+  }
+
+  .modal-overlay.open { display: flex; }
+
+  .modal {
+    background: var(--cream);
+    border-radius: 24px 24px 0 0;
+    padding: 32px 24px 40px;
+    width: 100%;
+    max-width: 520px;
+    animation: slideUp 0.3s cubic-bezier(.4,0,.2,1);
+  }
+
+  @keyframes slideUp {
+    from { transform: translateY(100%); }
+    to { transform: translateY(0); }
+  }
+
+  .modal-handle {
+    width: 40px;
+    height: 4px;
+    background: var(--cream-dark);
+    border-radius: 99px;
+    margin: 0 auto 24px;
+  }
+
+  .modal h3 {
+    font-family: 'Poppins', sans-serif;
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--green);
+    margin-bottom: 8px;
+  }
+
+  .modal-intro {
+    font-size: 13px;
+    color: var(--brown-muted);
+    line-height: 1.6;
+    margin-bottom: 20px;
+  }
+
+  .donate-card {
+    background: white;
+    border-radius: 14px;
+    padding: 16px;
+    margin-bottom: 12px;
+    border: 1.5px solid var(--cream-dark);
+  }
+
+  .donate-card-label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 10px;
+  }
+
+  .donate-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 6px;
+  }
+
+  .donate-row:last-child { margin-bottom: 0; }
+
+  .donate-row-label {
+    font-size: 12px;
+    color: var(--brown-muted);
+  }
+
+  .donate-row-value {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--brown);
+    font-family: monospace;
+    letter-spacing: 0.03em;
+  }
+
+  .copy-btn {
+    background: none;
+    border: 1.5px solid var(--cream-dark);
+    border-radius: 6px;
+    padding: 3px 8px;
+    font-size: 11px;
+    color: var(--muted);
+    cursor: pointer;
+    font-family: 'Inter', sans-serif;
+    transition: all 0.2s;
+  }
+
+  .copy-btn:hover { border-color: var(--gold); color: var(--brown); }
+  .copy-btn.copied { border-color: var(--green); color: var(--green); }
+
+  .donate-note {
+    font-size: 11px;
+    color: var(--muted);
+    line-height: 1.5;
+    margin-top: 8px;
+    padding: 8px 12px;
+    background: rgba(196,149,106,0.08);
+    border-radius: 8px;
+    border-left: 3px solid var(--gold);
+  }
+
+  .paypal-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: 100%;
+    padding: 13px;
+    background: #0070ba;
+    color: white;
+    border: none;
+    border-radius: 12px;
+    font-size: 14px;
+    font-weight: 700;
+    font-family: 'Inter', sans-serif;
+    cursor: pointer;
+    text-decoration: none;
+    margin-top: 4px;
+    transition: background 0.2s;
+  }
+
+  .paypal-btn:hover { background: #005ea6; }
+
+  .modal-close {
+    display: block;
+    text-align: center;
+    margin-top: 16px;
+    font-size: 13px;
+    color: var(--muted);
+    cursor: pointer;
+  }
+
+  /* ── FOOTER ── */
+  .footer {
+    background: var(--green);
+    color: rgba(250,247,242,0.5);
+    text-align: center;
+    padding: 20px;
+    font-size: 11px;
+    letter-spacing: 0.05em;
+  }
+
+  .footer strong { color: var(--gold); }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 380px) {
+    .header h1 { font-size: 26px; }
+    .steps { padding: 16px 10px 40px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="header">
+  <div class="logo-wrap"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1720" width="44" height="76" fill="white" aria-label="KFL Logo">
+<g transform="translate(0,1720) scale(0.1,-0.1)">
+<path d="M4670 17190 c-876 -63 -1705 -345 -2425 -823 -456 -302 -868 -686 -1202 -1119 -337 -436 -616 -960 -787 -1481 -117 -356 -188 -694 -233 -1117 -17 -155 -18 -398 -17 -4040 1 -4081 -1 -3967 45 -4300 174 -1262 832 -2414 1835 -3216 559 -447 1194 -763 1890 -939 239 -61 490 -105 739 -131 234 -25 745 -25 965 -1 508 57 925 158 1365 332 150 59 484 221 630 305 1177 677 2036 1805 2365 3108 71 281 119 584 140 872 7 96 11 1461 13 4015 2 4107 4 3911 -44 4250 -131 926 -517 1785 -1130 2520 -115 137 -369 396 -516 525 -792 696 -1761 1118 -2813 1225 -186 19 -646 27 -820 15z m40 -1419 l0 -839 -87 -12 c-431 -59 -890 -251 -1236 -517 l-59 -46 -599 599 c-329 329 -599 602 -599 606 0 4 50 47 111 95 496 395 1072 681 1675 831 256 64 586 118 737 121 l57 1 0 -839z m946 804 c727 -107 1410 -393 1999 -835 72 -54 150 -116 175 -138 l45 -41 -601 -602 -602 -602 -59 46 c-169 130 -424 274 -631 356 -189 76 -450 144 -634 166 l-58 7 0 841 0 840 101 -7 c55 -4 174 -18 265 -31z m-2778 -2681 c-271 -355 -460 -805 -519 -1236 l-12 -88 -874 0 -873 0 0 33 c0 54 29 269 55 412 102 554 310 1079 618 1565 88 138 268 382 372 503 l68 79 605 -605 605 -605 -45 -58z m5608 1032 c381 -488 656 -1052 804 -1645 55 -222 82 -375 115 -658 l6 -53 -879 0 -879 0 -12 88 c-58 421 -257 895 -518 1235 l-46 59 604 605 604 604 58 -63 c32 -35 96 -112 143 -172z m-3226 -571 c1048 -130 1830 -1016 1830 -2075 0 -565 -214 -1084 -610 -1480 -311 -311 -685 -505 -1130 -585 -145 -26 -454 -32 -617 -11 -462 59 -884 266 -1213 596 -311 310 -504 685 -586 1135 -25 142 -30 442 -9 605 89 704 516 1304 1150 1616 205 101 463 177 685 203 124 14 367 12 500 -4z m-2906 -2424 c13 -111 64 -336 106 -466 94 -288 222 -538 395 -769 l66 -90 -1170 -1170 -1171 -1171 0 1863 0 1862 884 0 883 0 7 -59z m7066 -2306 l0 -2365 -875 0 -875 0 0 2365 0 2365 875 0 875 0 0 -2365z m-1171 -2935 c826 0 1162 -3 1167 -11 3 -6 3 -339 -1 -741 -7 -666 -9 -729 -24 -725 -9 3 -94 39 -190 81 -622 272 -1214 455 -1610 497 -156 16 -496 6 -667 -20 -480 -74 -886 -211 -1556 -524 l-78 -36 0 2207 0 2208 118 17 c504 73 996 310 1394 671 92 83 265 270 278 299 3 7 6 -873 8 -1955 l2 -1968 1159 0z m-4832 3444 c240 -179 513 -316 813 -409 124 -38 317 -80 418 -91 l62 -7 0 -2352 0 -2353 -72 -37 c-40 -21 -194 -104 -343 -185 -148 -81 -314 -171 -369 -200 l-98 -53 -1564 1564 -1564 1564 1312 1312 c722 722 1314 1313 1315 1313 0 0 41 -30 90 -66z m-157 -5935 c0 -8 -198 -65 -315 -90 -68 -14 -152 -23 -260 -26 -144 -5 -172 -2 -286 21 -443 90 -1026 342 -1704 737 l-110 64 -3 990 -2 990 1340 -1340 c737 -737 1340 -1343 1340 -1346z m4375 1001 c406 -70 1028 -285 1637 -566 l128 -58 -5 -36 c-56 -429 -125 -727 -240 -1045 -50 -136 -149 -374 -162 -386 -5 -4 -87 24 -183 62 -575 228 -1077 349 -1451 349 -418 0 -900 -104 -1414 -305 -381 -148 -1087 -491 -1650 -799 -819 -449 -1142 -578 -1544 -618 -232 -22 -495 32 -899 184 l-133 51 -62 71 c-424 486 -747 1090 -917 1715 -40 144 -92 373 -86 378 2 2 45 -20 97 -48 52 -28 187 -98 300 -154 966 -484 1490 -585 2169 -419 362 89 730 256 1365 618 306 175 824 439 1165 594 601 272 1028 400 1465 436 100 8 303 -3 420 -24z m76 -2299 c180 -37 406 -102 649 -186 272 -93 340 -119 340 -130 0 -14 -160 -235 -262 -362 -646 -807 -1587 -1373 -2603 -1567 -311 -59 -442 -70 -830 -71 -288 0 -389 4 -505 18 -610 76 -1180 262 -1684 550 l-109 62 129 12 c412 39 826 179 1334 452 91 49 289 159 440 246 271 154 871 458 1165 590 480 216 866 343 1196 394 191 30 185 29 399 26 173 -3 212 -6 341 -34z"/>
+</g>
+</svg></div>
+  <h1>DER KFL-GUIDE</h1>
+  <p>Entdecke deinen nächsten Schritt<br>in der Kirche für Lippstadt.</p>
+</div>
+
+<!-- PROGRESS BANNER -->
+<div class="progress-banner">
+  <div class="progress-label" id="progressLabel">Schritt 0/10</div>
+  <div class="progress-track">
+    <div class="progress-fill" id="progressFill"></div>
+  </div>
+  <div class="progress-count" id="progressCount">0%</div>
+</div>
+
+<!-- STEPS -->
+<div class="steps" id="stepsList">
+
+  <!-- STEP 1 -->
+  <div class="step" id="step-0" onclick="handleStep(0)">
+    <div class="step-orb-wrap">
+      <div class="step-orb">
+        <span class="step-num">1</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+      </div>
+    </div>
+    <div class="step-body">
+      <div class="step-tag">Schritt 1 · Erster Kontakt</div>
+      <div class="step-title">Folg uns auf Instagram @kirchefuerlippstadt</div>
+      <div class="step-note">Bleib immer auf dem Laufenden – Events, Andachten und Community-Momente direkt in deinem Feed. <a href="https://instagram.com/kirchefuerlippstadt" target="_blank">@kirchefuerlippstadt ↗</a></div>
+      <div class="step-action">
+        <button class="btn btn-primary" onclick="completeStep(event, 0)">✓ Erledigt!</button>
+        <a href="https://instagram.com/kirchefuerlippstadt" target="_blank"><button class="btn btn-ghost">Zu Instagram</button></a>
+        <button class="btn btn-ghost" onclick="skipStep(event, 0)" style="color:var(--muted); border-color: transparent;">Überspringen →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 2 -->
+  <div class="step" id="step-1" onclick="handleStep(1)">
+    <div class="step-orb-wrap">
+      <div class="step-orb">
+        <span class="step-num">2</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+      </div>
+    </div>
+    <div class="step-body">
+      <div class="step-tag">Schritt 2 · Willkommen</div>
+      <div class="step-title">Löse den Erstbesucher-Gutschein im Café ein</div>
+      <div class="step-note">Als Erstbesucher im Gottesdienst erhältst du ein kostenloses Getränk deiner Wahl! Löse den Gutschein nach dem Gottesdienst im KFL-Café ein.</div>
+      <div class="step-action">
+        <button class="btn btn-primary" onclick="completeStep(event, 1)">✓ Eingelöst!</button>
+        <button class="btn btn-ghost" onclick="skipStep(event, 1)" style="color:var(--muted); border-color: transparent;">Überspringen →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 3 -->
+  <div class="step" id="step-2" onclick="handleStep(2)">
+    <div class="step-orb-wrap">
+      <div class="step-orb">
+        <span class="step-num">3</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+      </div>
+    </div>
+    <div class="step-body">
+      <div class="step-tag">Schritt 3 · Community</div>
+      <div class="step-title">Tritt der Community WhatsApp Gruppe bei</div>
+      <div class="step-note">Werde Teil der Community und erfahre mehr zu Weekly Challenges, internen Absprachen und Gebetsanliegen. <a href="https://community.kirchefuerlippstadt.de" target="_blank">community.kirchefuerlippstadt.de ↗</a></div>
+      <div class="step-action">
+        <button class="btn btn-primary" onclick="completeStep(event, 2)">✓ Beigetreten!</button>
+        <button class="btn btn-ghost" onclick="skipStep(event, 2)" style="color:var(--muted); border-color: transparent;">Überspringen →</button>
+        <a href="https://community.kirchefuerlippstadt.de" target="_blank"><button class="btn btn-ghost">Zur WhatsApp Gruppe</button></a>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 4 – Community Group (optional) -->
+  <div class="step" id="step-3" onclick="handleStep(3)">
+    <div class="step-orb-wrap">
+      <div class="step-orb">
+        <span class="step-num">4</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+      </div>
+    </div>
+    <div class="step-body">
+      <div class="step-tag">Schritt 4 · Verbindung</div>
+      <div class="step-title">Werde Teil einer Community Group</div>
+      <div class="step-note">Glaube lebt in echter Gemeinschaft. Finde deine Gruppe und werde Teil einer kleinen, lebendigen Gemeinschaft. <a href="https://groups.kirchefuerlippstadt.de" target="_blank">groups.kirchefuerlippstadt.de ↗</a></div>
+      <div class="step-action">
+        <button class="btn btn-primary" onclick="completeStep(event, 3)">✓ Dabei!</button>
+        <a href="https://groups.kirchefuerlippstadt.de" target="_blank"><button class="btn btn-ghost">Gruppen finden</button></a>
+        <button class="btn btn-ghost" onclick="skipStep(event, 3)" style="color:var(--muted); border-color: transparent;">Überspringen →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 5 -->
+  <div class="step" id="step-4" onclick="handleStep(4)">
+    <div class="step-orb-wrap">
+      <div class="step-orb">
+        <span class="step-num">5</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+      </div>
+    </div>
+    <div class="step-body">
+      <div class="step-tag">Schritt 5 · Kurs</div>
+      <div class="step-title">Schau dir den DISCOVER Kurs auf STEPS an</div>
+      <div class="step-note">Entdecke deine eigene Spiritualität. Der Kurs lädt dich ein, Fragen des Glaubens rational zu erkunden und dich auf eine geistliche Erfahrung und Begegnung mit Gott einzulassen. <a href="https://steps.kirchefuerlippstadt.de" target="_blank">steps.kirchefuerlippstadt.de ↗</a></div>
+      <div class="step-action">
+        <button class="btn btn-primary" onclick="completeStep(event, 4)">✓ Angeschaut!</button>
+        <a href="https://steps.kirchefuerlippstadt.de" target="_blank"><button class="btn btn-ghost">Zum Kurs</button></a>
+        <button class="btn btn-ghost" onclick="skipStep(event, 4)" style="color:var(--muted); border-color: transparent;">Überspringen →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 6 – SPECIAL -->
+  <div class="step highlight" id="step-5" onclick="handleStep(5)">
+    <div class="step-orb-wrap">
+      <div class="step-orb">
+        <span class="step-num">6</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+      </div>
+    </div>
+    <div class="step-body">
+      <div class="step-tag">Schritt 6 · Der wichtigste Schritt</div>
+      <div class="step-title">Gib Jesus dein Leben!</div>
+      <div class="step-note">Dieser Schritt ändert alles! Sprich mit einer Person deines Vertrauens in der Kirche – oder bete einfach selbst ein kurzes, aber ernst gemeintes Bekehrungsgebet.</div>
+      <div class="step-action">
+        <button class="btn btn-primary" onclick="openBekehrungModal(event)" style="background:var(--gold); color:var(--brown);">✓ Ich habe Ja gesagt!</button>
+        <button class="btn btn-ghost" onclick="skipStep(event, 5)" style="color:var(--muted); border-color: transparent;">Überspringen →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 7 -->
+  <div class="step" id="step-6" onclick="handleStep(6)">
+    <div class="step-orb-wrap">
+      <div class="step-orb">
+        <span class="step-num">7</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+      </div>
+    </div>
+    <div class="step-body">
+      <div class="step-tag">Schritt 7 · Wachstum</div>
+      <div class="step-title">Schau dir den BASIC Kurs auf STEPS an</div>
+      <div class="step-note">Grundlagen des Glaubens – verständlich, praxisnah, kostenlos. <a href="https://steps.kirchefuerlippstadt.de" target="_blank">steps.kirchefuerlippstadt.de ↗</a></div>
+      <div class="step-action">
+        <button class="btn btn-primary" onclick="completeStep(event, 6)">✓ Abgeschlossen!</button>
+        <a href="https://steps.kirchefuerlippstadt.de" target="_blank"><button class="btn btn-ghost">Zum Kurs</button></a>
+        <button class="btn btn-ghost" onclick="skipStep(event, 6)" style="color:var(--muted); border-color: transparent;">Überspringen →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 8 -->
+  <div class="step" id="step-7" onclick="handleStep(7)">
+    <div class="step-orb-wrap">
+      <div class="step-orb">
+        <span class="step-num">8</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+      </div>
+    </div>
+    <div class="step-body">
+      <div class="step-tag">Schritt 8 · Bekenntnis</div>
+      <div class="step-title">Bekenne deinen Glauben und lass dich Taufen!</div>
+      <div class="step-note">Die Taufe ist ein öffentliches Zeichen deines neuen Lebens. Sprich mit uns über den nächsten Tauftermin.</div>
+      <div class="step-action">
+        <button class="btn btn-primary" onclick="completeStep(event, 7)">✓ Getauft!</button>
+        <button class="btn btn-ghost" onclick="skipStep(event, 7)" style="color:var(--muted); border-color: transparent;">Überspringen →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 9 -->
+  <div class="step" id="step-8" onclick="handleStep(8)">
+    <div class="step-orb-wrap">
+      <div class="step-orb">
+        <span class="step-num">9</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+      </div>
+    </div>
+    <div class="step-body">
+      <div class="step-tag">Schritt 9 · Kurs</div>
+      <div class="step-title">Mach das ONBOARDING als letzten STEPS Kurs</div>
+      <div class="step-note">Alles Wichtige über KFL – unsere Werte, Vision und wie du aktiv Teil dieser Gemeinde wirst. <a href="https://steps.kirchefuerlippstadt.de" target="_blank">steps.kirchefuerlippstadt.de ↗</a></div>
+      <div class="step-action">
+        <button class="btn btn-primary" onclick="completeStep(event, 8)">✓ Fertig!</button>
+        <a href="https://steps.kirchefuerlippstadt.de" target="_blank"><button class="btn btn-ghost">Zum Kurs</button></a>
+        <button class="btn btn-ghost" onclick="skipStep(event, 8)" style="color:var(--muted); border-color: transparent;">Überspringen →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 10 -->
+  <div class="step" id="step-9" onclick="handleStep(9)">
+    <div class="step-orb-wrap">
+      <div class="step-orb">
+        <span class="step-num">10</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+      </div>
+    </div>
+    <div class="step-body">
+      <div class="step-tag">Schritt 10 · Zuhause angekommen</div>
+      <div class="step-title">Werde Teil des KFL-Teams!</div>
+      <div class="step-note">Du hast das Onboarding gemacht und deinen aktuellen Visionssatz entdeckt? Du möchtest dich in der KFL einbringen? Dann unterschreibe das Commitment-Paper und werde Teil des Teams.</div>
+      <div class="step-action">
+        <button class="btn btn-primary" onclick="completeStep(event, 9)">✓ Ich bin dabei!</button>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- COMPLETION -->
+<div class="completion" id="completion">
+  <div class="completion-inner">
+    <div class="completion-icon">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+    </div>
+    <h2>Willkommen im Team! 🎉</h2>
+    <p>Du hast das Commitment-Paper unterschrieben und bist jetzt offiziell Teil des Teams. Wir freuen uns auf alles, was Gott durch dich wirken wird.</p>
+    <span class="completion-reset" onclick="resetAll()">Von vorne beginnen</span>
+  </div>
+</div>
+
+<!-- BEKEHRUNG MODAL -->
+<div class="bekehrung-overlay" id="bekehrungModal">
+  <div class="bekehrung-modal">
+    <div class="bekehrung-emoji">🎉</div>
+    <h3>Herzlichen Glückwunsch zu der besten Entscheidung deines Lebens!</h3>
+    <p>Die Engel im Himmel jubeln. Und auch wir würden uns freuen, wenn du diesen Schritt mit uns teilst.</p>
+    <button class="bekehrung-btn-share" onclick="shareWithCommunity()">💬 Mit der Community teilen</button>
+    <button class="bekehrung-btn-skip" onclick="closeBekehrungModal()">Bin schon länger bekehrt</button>
+  </div>
+</div>
+
+<!-- DONATE BUTTON -->
+<button class="donate-btn" onclick="openDonate()">
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+  Spenden
+</button>
+
+<!-- DONATE MODAL -->
+<div class="modal-overlay" id="donateModal" onclick="closeDonateOutside(event)">
+  <div class="modal">
+    <div class="modal-handle"></div>
+    <h3>KFL unterstützen</h3>
+    <p class="modal-intro">Als Freikirche erheben wir keine Kirchensteuern – wir werden zu 100% von freiwilligen Spendern getragen. Danke für deine Unterstützung!</p>
+
+    <div class="donate-card">
+      <div class="donate-card-label">Banküberweisung</div>
+      <div class="donate-row">
+        <span class="donate-row-label">Empfänger</span>
+        <span class="donate-row-value" style="font-family:'Inter',sans-serif; font-size:12px;">KIRCHE FUER LIPPSTADT</span>
+      </div>
+      <div class="donate-row">
+        <span class="donate-row-label">Institut</span>
+        <span class="donate-row-value" style="font-family:'Inter',sans-serif; font-size:12px;">Spar- und Kreditbank eG, Witten</span>
+      </div>
+      <div class="donate-row">
+        <span class="donate-row-label">IBAN</span>
+        <div style="display:flex;align-items:center;gap:8px;">
+          <span class="donate-row-value">DE24452604750014648000</span>
+          <button class="copy-btn" onclick="copyText('DE24452604750014648000', this)">Kopieren</button>
+        </div>
+      </div>
+      <div class="donate-row">
+        <span class="donate-row-label">BIC</span>
+        <div style="display:flex;align-items:center;gap:8px;">
+          <span class="donate-row-value">GENODEMIBFG</span>
+          <button class="copy-btn" onclick="copyText('GENODEMIBFG', this)">Kopieren</button>
+        </div>
+      </div>
+      <div class="donate-note">⚠️ Für eine Spenden-Bescheinigung bitte Name und Adresse im Verwendungszweck angeben.</div>
+    </div>
+
+    <a class="paypal-btn" href="https://paypal.me/kirchefuerlippstadt" target="_blank">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M7.076 21.337H2.47a.641.641 0 0 1-.633-.74L4.944.901C5.026.382 5.474 0 5.998 0h7.46c2.57 0 4.578.543 5.69 1.81 1.01 1.15 1.304 2.42 1.012 4.287-.023.143-.047.288-.077.437-.983 5.05-4.349 6.797-8.647 6.797h-2.19c-.524 0-.968.382-1.05.9l-1.12 7.106zm14.146-14.42a3.35 3.35 0 0 0-.607-.541c-.013.076-.026.175-.041.254-.93 4.778-4.005 7.201-9.138 7.201h-2.19a.563.563 0 0 0-.556.479l-1.187 7.527h-.506l-.24 1.516a.56.56 0 0 0 .554.647h3.882c.46 0 .85-.334.922-.788.06-.26.76-4.852.816-5.09a.932.932 0 0 1 .923-.788h.58c3.76 0 6.705-1.528 7.565-5.946.36-1.847.174-3.388-.777-4.471z"/></svg>
+      Mit PayPal spenden
+    </a>
+
+    <span class="modal-close" onclick="closeDonate()">Schließen</span>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<div class="footer">
+  <strong>Kirche für Lippstadt</strong> · kirchefuerlippstadt.de
+</div>
+
+<script>
+  const TOTAL = 10;
+  const SKIPPABLE = new Set([0,1,2,3,4,5,6,7,8,9]); // all steps skippable by default
+  // Prerequisites: step idx -> must have completed (not skipped) these indices first
+  const PREREQUISITES = {
+    7: 6,  // Taufen (idx 7) requires BASIC Kurs (idx 6)
+    9: 8   // KFL-Team (idx 9) requires Onboarding (idx 8)
+  };
+  let completed = new Set();
+  let skipped = new Set();
+  let activeStep = 0;
+
+  function init() {
+    const saved = localStorage.getItem('kfl-completed');
+    if (saved) completed = new Set(JSON.parse(saved));
+    const savedSkip = localStorage.getItem('kfl-skipped');
+    if (savedSkip) skipped = new Set(JSON.parse(savedSkip));
+    renderAll();
+  }
+
+  function save() {
+    localStorage.setItem('kfl-completed', JSON.stringify([...completed]));
+    localStorage.setItem('kfl-skipped', JSON.stringify([...skipped]));
+  }
+
+  function renderAll() {
+    // Find next uncompleted step (skipped don't count as done)
+    // Only recalculate if activeStep is already done (not skipped)
+    if (activeStep === -1 || (completed.has(activeStep) && !skipped.has(activeStep))) {
+      activeStep = -1;
+      for (let i = 0; i < TOTAL; i++) {
+        if (!completed.has(i) || skipped.has(i)) { activeStep = i; break; }
+      }
+    }
+
+    for (let i = 0; i < TOTAL; i++) {
+      const el = document.getElementById('step-' + i);
+      el.classList.remove('done', 'active', 'skipped', 'has-prereq');
+      const prereq = PREREQUISITES[i];
+      if (prereq !== undefined && (!completed.has(prereq) || skipped.has(prereq))) {
+        el.classList.add('has-prereq');
+      }
+      if (completed.has(i) && !skipped.has(i)) {
+        el.classList.add('done');
+      } else if (skipped.has(i) && i !== activeStep) {
+        el.classList.add('skipped');
+      } else if (i === activeStep) {
+        el.classList.add('active');
+      }
+    }
+
+    // Progress
+    const reallyDone = [...completed].filter(i => !skipped.has(i)).length;
+    const pct = Math.round((reallyDone / TOTAL) * 100);
+    document.getElementById('progressFill').style.width = pct + '%';
+    document.getElementById('progressCount').textContent = pct + '%';
+    document.getElementById('progressLabel').textContent = `Schritt ${reallyDone}/${TOTAL}`;
+
+    // Completion screen
+    const stepsList = document.getElementById('stepsList');
+    const completionEl = document.getElementById('completion');
+    const allDone = [...Array(TOTAL).keys()].every(i => completed.has(i) && !skipped.has(i));
+    if (allDone) {
+      stepsList.style.display = 'none';
+      completionEl.classList.add('visible');
+    } else {
+      stepsList.style.display = 'flex';
+      completionEl.classList.remove('visible');
+    }
+  }
+
+  function uncompleteStep(idx) {
+    completed.delete(idx);
+    skipped.delete(idx);
+    activeStep = idx;
+    save();
+    renderAll();
+    setTimeout(() => {
+      document.getElementById('step-' + idx).scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }, 50);
+  }
+
+  function handleStep(idx) {
+    // If already done (not skipped), offer to undo
+    if (completed.has(idx) && !skipped.has(idx)) {
+      uncompleteStep(idx);
+      return;
+    }
+    // Just make it active (expand) — tapping the button inside completes it
+    activeStep = idx;
+    renderAll();
+    // Scroll into view
+    setTimeout(() => {
+      document.getElementById('step-' + idx).scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }, 50);
+  }
+
+  function showPrereqWarning(idx, prereqIdx) {
+    const stepNames = {
+      6: 'den BASIC Kurs (Schritt 7)',
+      8: 'das Onboarding (Schritt 9)'
+    };
+    const name = stepNames[prereqIdx] || 'den vorherigen Schritt';
+    const body = document.querySelector('#step-' + idx + ' .step-body');
+    // Show inline warning
+    let warn = document.getElementById('prereq-warn-' + idx);
+    if (!warn) {
+      warn = document.createElement('div');
+      warn.id = 'prereq-warn-' + idx;
+      warn.style.cssText = 'margin-top:10px; padding:8px 12px; background:rgba(196,149,106,0.15); border-radius:8px; font-size:12px; color:var(--brown-muted); border-left:3px solid var(--gold);';
+      body.appendChild(warn);
+    }
+    warn.textContent = '⚠️ Dafür musst du zuerst ' + name + ' abschließen.';
+    setTimeout(() => { if (warn) warn.remove(); }, 3500);
+  }
+
+  function skipStep(event, idx) {
+    event.stopPropagation();
+    // Check if skipping this step would block a step that has a prerequisite on it
+    // (No restriction on skipping itself - restrictions are on the dependent step)
+    completed.add(idx);
+    skipped.add(idx);
+    save();
+    // Set activeStep to next uncompleted step explicitly
+    const nextIdx = idx + 1;
+    if (nextIdx < TOTAL) activeStep = nextIdx;
+    renderAll();
+    if (nextIdx < TOTAL) {
+      setTimeout(() => {
+        document.getElementById('step-' + nextIdx).scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }, 200);
+    }
+  }
+
+  function completeStep(event, idx) {
+    event.stopPropagation();
+    // Check prerequisites
+    const prereq = PREREQUISITES[idx];
+    if (prereq !== undefined && (!completed.has(prereq) || skipped.has(prereq))) {
+      showPrereqWarning(idx, prereq);
+      return;
+    }
+    completed.add(idx);
+    skipped.delete(idx); // if it was skipped before, now it's properly done
+    save();
+    renderAll();
+
+    // Celebrate with a brief confetti-style flash
+    const orb = document.querySelector('#step-' + idx + ' .step-orb');
+    orb.style.transform = 'scale(1.2)';
+    setTimeout(() => { orb.style.transform = 'scale(1)'; }, 300);
+
+    // Auto-scroll to next step
+    const nextIdx = idx + 1;
+    if (nextIdx < TOTAL) {
+      setTimeout(() => {
+        document.getElementById('step-' + nextIdx).scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }, 400);
+    }
+  }
+
+  function resetAll() {
+    completed = new Set();
+    save();
+    renderAll();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function openBekehrungModal(event) {
+    event.stopPropagation();
+    // Complete the step first
+    const prereq = PREREQUISITES[5];
+    if (prereq !== undefined && (!completed.has(prereq) || skipped.has(prereq))) {
+      showPrereqWarning(5, prereq);
+      return;
+    }
+    completed.add(5);
+    skipped.delete(5);
+    save();
+    renderAll();
+    document.getElementById('bekehrungModal').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeBekehrungModal() {
+    document.getElementById('bekehrungModal').classList.remove('open');
+    document.body.style.overflow = '';
+    // Scroll to next step
+    setTimeout(() => {
+      document.getElementById('step-6').scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }, 300);
+  }
+
+  function shareWithCommunity() {
+    const msg = encodeURIComponent('Hey Leute, ich habe mich bekehrt. 😊');
+    window.open('https://wa.me/?text=' + msg, '_blank');
+    closeBekehrungModal();
+  }
+
+  init();
+
+  function openDonate() {
+    document.getElementById('donateModal').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeDonate() {
+    document.getElementById('donateModal').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  function closeDonateOutside(e) {
+    if (e.target === document.getElementById('donateModal')) closeDonate();
+  }
+
+  function copyText(text, btn) {
+    navigator.clipboard.writeText(text).then(() => {
+      btn.textContent = '✓ Kopiert';
+      btn.classList.add('copied');
+      setTimeout(() => {
+        btn.textContent = 'Kopieren';
+        btn.classList.remove('copied');
+      }, 2000);
+    });
+  }
+</script>
+</body>
+</html>
