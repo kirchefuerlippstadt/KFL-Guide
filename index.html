@@ -346,6 +346,19 @@
     background: var(--muted) !important;
   }
 
+  /* Fix: skipped highlight step (e.g. Jesus step) must use dark text on light bg */
+  .step.highlight.skipped .step-title {
+    color: var(--brown-muted) !important;
+  }
+
+  .step.highlight.skipped .step-tag {
+    color: var(--muted) !important;
+  }
+
+  .step.highlight.skipped .step-note {
+    color: var(--muted) !important;
+  }
+
   .step-note {
     font-size: 12px;
     color: var(--muted);
